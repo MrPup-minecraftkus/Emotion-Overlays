@@ -1,0 +1,9 @@
+{
+  "key.emotion_overlays.emoji_menu": "Open Emoji Menu",
+  "key.categories.emotion_overlays": "Emotion Overlays",
+
+  "screen.emotion_overlays.emoji_menu": "Choose Emoji",
+
+  "gui.emotion_overlays.status.loaded": "Successfully download (%s)",
+  "gui.emotion_overlays.status.loading": "Download %s/%s (%s%%)"
+}
