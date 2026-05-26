@@ -1,0 +1,9 @@
+{
+  "key.emotion_overlays.emoji_menu": "Відкрити меню емодзі",
+  "key.categories.emotion_overlays": "Emotion Overlays",
+
+  "screen.emotion_overlays.emoji_menu": "Оберіть емодзі",
+
+  "gui.emotion_overlays.status.loaded": "Успішно завантажено (%s)",
+  "gui.emotion_overlays.status.loading": "Завантажено %s/%s (%s%%)"
+}

@@ -1,0 +1,30 @@
+{
+	"schemaVersion": 1,
+	"id": "emotion_overlays",
+	"version": "${version}",
+	"name": "Emotion Overlays",
+	"description": "Now players can share their emotions with you \uD83D\uDE01",
+	"authors": [
+		"MrPup(minecraftkus)"
+	],
+	"contact": {
+		"sources": "https://github.com/MrPup-minecraftkus/Emotion-Overlays"
+	},
+	"license": "MIT",
+	"icon": "emojis_logo.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.mrpup.emotion_overlays.EmotionOverlays"
+		],
+		"client": [
+			"com.mrpup.emotion_overlays.client.EmotionOverlaysClient"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.18.2",
+		"minecraft": "~26.1.1",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
