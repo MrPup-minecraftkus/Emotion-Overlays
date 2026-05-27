@@ -131,9 +131,10 @@ public class EmojiTextureManager {
         }
 
         if (resp.statusCode() != 200) {
-            LOG.debug("CDN {} for {}", resp.statusCode(), entry.cpHex());
-            failedThisSession.add(entry.cpHex());
-            try { Files.createFile(failFile); } catch (IOException ignored) {}
+            if (externalProvider == null || !externalProvider.isPending(entry.cpHex())) {
+                failedThisSession.add(entry.cpHex());
+                try { Files.createFile(failFile); } catch (IOException ignored) {}
+            }
             return null;
         }
 

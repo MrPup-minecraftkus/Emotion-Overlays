@@ -32,7 +32,15 @@ public record BroadcastEmojiPacket(UUID playerId, String emojiCpHex) implements 
     public static void handle(BroadcastEmojiPacket packet, IPayloadContext context) {
         context.enqueueWork(() -> {
             EmojiEntry emoji = EmojiRegistry.byCp(packet.emojiCpHex());
-            if (emoji != null) EmojiData.setEmoji(packet.playerId(), emoji);
+            if (emoji == null) {
+                emoji = new EmojiEntry(
+                        packet.emojiCpHex(),
+                        packet.emojiCpHex(),
+                        packet.emojiCpHex(),
+                        "7TV"
+                );
+            }
+            EmojiData.setEmoji(packet.playerId(), emoji);
         });
     }
 }
