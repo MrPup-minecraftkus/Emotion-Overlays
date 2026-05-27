@@ -12,27 +12,32 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
-public record SelectEmojiPacket(int emojiIndex) implements CustomPacketPayload {
+public record SelectEmojiPacket(String  emojiCpHex) implements CustomPacketPayload {
 
     public static final Type<SelectEmojiPacket> TYPE = new Type<>(
             ResourceLocation.fromNamespaceAndPath(EmotionOverlays.MOD_ID, "select_emoji"));
 
     public static final StreamCodec<ByteBuf, SelectEmojiPacket> STREAM_CODEC =
-            ByteBufCodecs.INT.map(SelectEmojiPacket::new, SelectEmojiPacket::emojiIndex);
+            ByteBufCodecs.STRING_UTF8.map(SelectEmojiPacket::new, SelectEmojiPacket::emojiCpHex);
 
     @Override
     public Type<? extends CustomPacketPayload> type() { return TYPE; }
 
     public static void handle(SelectEmojiPacket packet, ServerPlayNetworking.Context context) {
-        ServerPlayer serverPlayer = context.player();
-        EmojiEntry emoji = EmojiRegistry.byIndex(packet.emojiIndex());
-        if (emoji == null) return;
+        if (!(context.player() instanceof ServerPlayer serverPlayer)) return;
+
+        String cpHex = packet.emojiCpHex();
+        if (cpHex == null || cpHex.isBlank()) return;
+
+        EmojiEntry emoji = EmojiRegistry.byCp(cpHex);
+        if (emoji == null) {
+            emoji = new EmojiEntry(cpHex, cpHex, cpHex, "7TV");
+        }
 
         EmojiData.setEmoji(serverPlayer.getUUID(), emoji);
 
         BroadcastEmojiPacket broadcast = new BroadcastEmojiPacket(
-                serverPlayer.getUUID(), packet.emojiIndex());
-
+                serverPlayer.getUUID(), cpHex);
         serverPlayer.serverLevel().players().forEach(p ->
                 ServerPlayNetworking.send(p, broadcast));
     }

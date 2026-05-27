@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.UUID;
 
-public record BroadcastEmojiPacket(UUID playerId, int emojiIndex) implements CustomPacketPayload {
+public record BroadcastEmojiPacket(UUID playerId, String emojiCpHex) implements CustomPacketPayload {
 
     public static final Type<BroadcastEmojiPacket> TYPE = new Type<>(
             ResourceLocation.fromNamespaceAndPath(EmotionOverlays.MOD_ID, "broadcast_emoji"));
@@ -22,15 +22,23 @@ public record BroadcastEmojiPacket(UUID playerId, int emojiIndex) implements Cus
             StreamCodec.composite(
                     ByteBufCodecs.STRING_UTF8.map(UUID::fromString, UUID::toString),
                     BroadcastEmojiPacket::playerId,
-                    ByteBufCodecs.INT,
-                    BroadcastEmojiPacket::emojiIndex,
+                    ByteBufCodecs.STRING_UTF8,
+                    BroadcastEmojiPacket::emojiCpHex,
                     BroadcastEmojiPacket::new);
 
     @Override
     public Type<? extends CustomPacketPayload> type() { return TYPE; }
 
     public static void handle(BroadcastEmojiPacket packet, ClientPlayNetworking.Context context) {
-        EmojiEntry emoji = EmojiRegistry.byIndex(packet.emojiIndex());
-        if (emoji != null) EmojiData.setEmoji(packet.playerId(), emoji);
+        EmojiEntry emoji = EmojiRegistry.byCp(packet.emojiCpHex());
+        if (emoji == null) {
+            emoji = new EmojiEntry(
+                    packet.emojiCpHex(),
+                    packet.emojiCpHex(),
+                    packet.emojiCpHex(),
+                    "7TV"
+            );
+        }
+        EmojiData.setEmoji(packet.playerId(), emoji);
     }
 }

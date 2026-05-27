@@ -1,7 +1,5 @@
 package com.mrpup.emotion_overlays.client.animate;
 
-
-
 import com.mojang.blaze3d.platform.NativeImage;
 
 import java.util.List;
