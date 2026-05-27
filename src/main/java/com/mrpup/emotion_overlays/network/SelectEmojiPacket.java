@@ -1,4 +1,4 @@
-package com.mrpup.emotion_overlays.client.network;
+package com.mrpup.emotion_overlays.network;
 
 import com.mrpup.emotion_overlays.EmotionOverlays;
 import com.mrpup.emotion_overlays.common.EmojiData;

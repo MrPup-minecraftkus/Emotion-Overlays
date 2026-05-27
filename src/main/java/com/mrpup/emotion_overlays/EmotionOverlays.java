@@ -1,5 +1,6 @@
 package com.mrpup.emotion_overlays;
 
+import com.mrpup.emotion_overlays.network.NetworkHandler;
 import net.fabricmc.api.ModInitializer;
 
 
@@ -9,6 +10,6 @@ public class EmotionOverlays implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-
+        NetworkHandler.registerServer();
 	}
 }

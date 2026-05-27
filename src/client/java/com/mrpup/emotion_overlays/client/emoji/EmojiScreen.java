@@ -1,9 +1,9 @@
 package com.mrpup.emotion_overlays.client.emoji;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mrpup.emotion_overlays.client.network.SelectEmojiPacket;
 import com.mrpup.emotion_overlays.common.EmojiEntry;
 import com.mrpup.emotion_overlays.common.EmojiRegistry;
+import com.mrpup.emotion_overlays.network.SelectEmojiPacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;

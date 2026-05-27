@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mrpup.emotion_overlays.client.emoji.ClientEventHandler;
 import com.mrpup.emotion_overlays.client.emoji.EmojiRenderer;
 import com.mrpup.emotion_overlays.client.emoji.EmojiTextureManager;
-import com.mrpup.emotion_overlays.client.network.NetworkHandler;
+import com.mrpup.emotion_overlays.client.network.ClientNetworkHandler;
 import com.mrpup.emotion_overlays.common.EmojiRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
@@ -32,8 +32,7 @@ public class EmotionOverlaysClient implements ClientModInitializer {
         });
 
         ClientEventHandler.register();
+        ClientNetworkHandler.registerClient();
         EmojiRenderer.register();
-        NetworkHandler.registerServer();
-        NetworkHandler.registerClient();
 	}
 }
