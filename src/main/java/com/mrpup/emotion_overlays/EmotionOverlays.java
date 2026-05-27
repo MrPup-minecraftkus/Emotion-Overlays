@@ -20,7 +20,4 @@ public class EmotionOverlays {
     private void commonSetup(final FMLCommonSetupEvent event) {
         NetworkHandler.register();
     }
-
-    public static void register(String id, ResourceLocation texture) {
-    }
 }

@@ -312,7 +312,7 @@ public class EmojiScreen extends Screen {
 
         if (hoveredIndex >= 0 && hoveredIndex < currentList.size()) {
             EmojiEntry selected = currentList.get(hoveredIndex);
-            PacketDistributor.sendToServer(new SelectEmojiPacket(selected.index()));
+            PacketDistributor.sendToServer(new SelectEmojiPacket(selected.cpHex()));
             onClose();
             return true;
         }

@@ -10,15 +10,16 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public record SelectEmojiPacket(int emojiIndex) implements CustomPacketPayload {
+public record SelectEmojiPacket(String emojiCpHex) implements CustomPacketPayload {
 
     public static final Type<SelectEmojiPacket> TYPE = new Type<>(
             ResourceLocation.fromNamespaceAndPath(EmotionOverlays.MOD_ID, "select_emoji"));
 
     public static final StreamCodec<ByteBuf, SelectEmojiPacket> STREAM_CODEC =
-            ByteBufCodecs.INT.map(SelectEmojiPacket::new, SelectEmojiPacket::emojiIndex);
+            ByteBufCodecs.STRING_UTF8.map(SelectEmojiPacket::new, SelectEmojiPacket::emojiCpHex);
 
     @Override
     public Type<? extends CustomPacketPayload> type() { return TYPE; }
@@ -26,14 +27,14 @@ public record SelectEmojiPacket(int emojiIndex) implements CustomPacketPayload {
     public static void handle(SelectEmojiPacket packet, IPayloadContext context) {
         context.enqueueWork(() -> {
             if (!(context.player() instanceof ServerPlayer serverPlayer)) return;
-            EmojiEntry emoji = EmojiRegistry.byIndex(packet.emojiIndex());
+            EmojiEntry emoji = EmojiRegistry.byCp(packet.emojiCpHex());
             if (emoji == null) return;
             EmojiData.setEmoji(serverPlayer.getUUID(), emoji);
 
             BroadcastEmojiPacket broadcast = new BroadcastEmojiPacket(
-                    serverPlayer.getUUID(), packet.emojiIndex());
+                    serverPlayer.getUUID(), packet.emojiCpHex());
             serverPlayer.serverLevel().players().forEach(p ->
-                    net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(p, broadcast));
+                    PacketDistributor.sendToPlayer(p, broadcast));
         });
     }
 }
