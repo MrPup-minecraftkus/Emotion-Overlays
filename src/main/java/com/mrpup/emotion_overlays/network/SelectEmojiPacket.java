@@ -27,12 +27,19 @@ public record SelectEmojiPacket(String emojiCpHex) implements CustomPacketPayloa
     public static void handle(SelectEmojiPacket packet, IPayloadContext context) {
         context.enqueueWork(() -> {
             if (!(context.player() instanceof ServerPlayer serverPlayer)) return;
-            EmojiEntry emoji = EmojiRegistry.byCp(packet.emojiCpHex());
-            if (emoji == null) return;
+
+            String cpHex = packet.emojiCpHex();
+            if (cpHex == null || cpHex.isBlank()) return;
+
+            EmojiEntry emoji = EmojiRegistry.byCp(cpHex);
+            if (emoji == null) {
+                emoji = new EmojiEntry(cpHex, cpHex, cpHex, "7TV");
+            }
+
             EmojiData.setEmoji(serverPlayer.getUUID(), emoji);
 
             BroadcastEmojiPacket broadcast = new BroadcastEmojiPacket(
-                    serverPlayer.getUUID(), packet.emojiCpHex());
+                    serverPlayer.getUUID(), cpHex);
             serverPlayer.level().players().forEach(p ->
                     PacketDistributor.sendToPlayer(p, broadcast));
         });

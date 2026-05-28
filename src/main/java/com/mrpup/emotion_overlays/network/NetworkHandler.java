@@ -1,10 +1,10 @@
 package com.mrpup.emotion_overlays.network;
 
 import com.mrpup.emotion_overlays.EmotionOverlays;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 @EventBusSubscriber(modid = EmotionOverlays.MOD_ID)
 public class NetworkHandler {
