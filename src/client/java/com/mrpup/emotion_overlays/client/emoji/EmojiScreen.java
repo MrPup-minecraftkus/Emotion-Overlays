@@ -1,8 +1,8 @@
 package com.mrpup.emotion_overlays.client.emoji;
 
-import com.mrpup.emotion_overlays.client.network.SelectEmojiPacket;
 import com.mrpup.emotion_overlays.common.EmojiEntry;
 import com.mrpup.emotion_overlays.common.EmojiRegistry;
+import com.mrpup.emotion_overlays.network.SelectEmojiPacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.events.GuiEventListener;
